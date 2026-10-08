@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { Check, ChevronDown } from "lucide-react";
+import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const Select = SelectPrimitive.Root;
@@ -41,11 +41,23 @@ export function SelectContent({
           "z-50 overflow-hidden rounded-xl border border-border bg-surface shadow-lg",
           className
         )}
+        style={{ maxHeight: "min(320px, var(--radix-select-content-available-height, 320px))" }}
         position="popper"
         sideOffset={6}
         {...props}
       >
-        <SelectPrimitive.Viewport className="p-1">{children}</SelectPrimitive.Viewport>
+        <SelectPrimitive.ScrollUpButton className="flex items-center justify-center py-1 text-foreground-muted">
+          <ChevronUp className="h-4 w-4" />
+        </SelectPrimitive.ScrollUpButton>
+        <SelectPrimitive.Viewport
+          className="scrollbar-thin overflow-y-auto p-1"
+          style={{ maxHeight: "min(320px, var(--radix-select-content-available-height, 320px))" }}
+        >
+          {children}
+        </SelectPrimitive.Viewport>
+        <SelectPrimitive.ScrollDownButton className="flex items-center justify-center py-1 text-foreground-muted">
+          <ChevronDown className="h-4 w-4" />
+        </SelectPrimitive.ScrollDownButton>
       </SelectPrimitive.Content>
     </SelectPrimitive.Portal>
   );

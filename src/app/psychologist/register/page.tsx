@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input, Label, Textarea } from "@/components/ui/input";
 import { usePlatformStore } from "@/lib/store";
 import { VerificationRequest } from "@/lib/types";
+import { todayLocalISODate } from "@/lib/utils";
 
 const DOCS = [
   { key: "qualification", label: "Qualification documents" },
@@ -20,20 +21,25 @@ export default function PsychologistRegisterPage() {
   const [submitted, setSubmitted] = useState(false);
   const [name, setName] = useState("");
   const [uploaded, setUploaded] = useState<Record<string, boolean>>({});
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const allDocsAttached = DOCS.every((d) => uploaded[d.key]);
+  const passwordsMismatch = confirmPassword.length > 0 && password !== confirmPassword;
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!allDocsAttached || password !== confirmPassword) return;
     setSubmitting(true);
     setTimeout(() => {
       const req: VerificationRequest = {
         id: `ver-${Date.now()}`,
         psychologistId: `pending-${Date.now()}`,
         psychologistName: name || "New Applicant",
-        submittedAt: new Date().toISOString().slice(0, 10),
+        submittedAt: todayLocalISODate(),
         status: "pending",
         documents: DOCS.map((d) => ({
           label: d.label,
-          status: uploaded[d.key] ? "submitted" : "submitted",
+          status: "submitted",
         })),
       };
       submitVerification(req);
@@ -109,13 +115,31 @@ export default function PsychologistRegisterPage() {
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <Label>Password</Label>
-                <Input type="password" placeholder="••••••••" required minLength={8} />
+                <Input
+                  type="password"
+                  placeholder="••••••••"
+                  required
+                  minLength={8}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </div>
               <div>
                 <Label>Confirm password</Label>
-                <Input type="password" placeholder="••••••••" required minLength={8} />
+                <Input
+                  type="password"
+                  placeholder="••••••••"
+                  required
+                  minLength={8}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  aria-invalid={passwordsMismatch}
+                />
               </div>
             </div>
+            {passwordsMismatch && (
+              <p className="text-xs text-danger">Passwords don&apos;t match.</p>
+            )}
           </div>
         </section>
 
@@ -196,9 +220,14 @@ export default function PsychologistRegisterPage() {
           Your profile stays private and unlisted until verification is complete.
         </div>
 
-        <Button type="submit" variant="accent" size="lg" className="w-full" disabled={submitting}>
+        <Button type="submit" variant="accent" size="lg" className="w-full" disabled={submitting || !allDocsAttached || passwordsMismatch}>
           {submitting ? "Submitting application…" : "Submit Application"}
         </Button>
+        {!allDocsAttached && (
+          <p className="text-center text-xs text-foreground-muted">
+            Attach all three documents above to submit your application.
+          </p>
+        )}
       </form>
 
       <p className="mt-6 text-center text-sm text-foreground-muted">

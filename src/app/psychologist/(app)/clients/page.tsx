@@ -47,6 +47,7 @@ export default function PsychologistClientsPage() {
       </div>
 
       <div className="mt-6 overflow-hidden rounded-2xl border border-border bg-surface">
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-surface-muted text-left text-xs uppercase tracking-wider text-foreground-muted">
             <tr>
@@ -71,6 +72,7 @@ export default function PsychologistClientsPage() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

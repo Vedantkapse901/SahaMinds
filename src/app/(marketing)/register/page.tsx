@@ -10,9 +10,13 @@ import { Input, Label } from "@/components/ui/input";
 export default function ClientRegisterPage() {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const passwordsMismatch = confirmPassword.length > 0 && password !== confirmPassword;
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (password !== confirmPassword) return;
     setSubmitting(true);
     setTimeout(() => {
       router.push("/dashboard");
@@ -44,20 +48,38 @@ export default function ClientRegisterPage() {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <Label>Password</Label>
-            <Input type="password" placeholder="••••••••" required minLength={8} />
+            <Input
+              type="password"
+              placeholder="••••••••"
+              required
+              minLength={8}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
           <div>
             <Label>Confirm password</Label>
-            <Input type="password" placeholder="••••••••" required minLength={8} />
+            <Input
+              type="password"
+              placeholder="••••••••"
+              required
+              minLength={8}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              aria-invalid={passwordsMismatch}
+            />
           </div>
         </div>
+        {passwordsMismatch && (
+          <p className="-mt-2 text-xs text-danger">Passwords don&apos;t match.</p>
+        )}
 
         <label className="flex items-start gap-2 pt-1 text-sm text-foreground-muted">
           <input type="checkbox" className="mt-0.5 rounded border-border-strong" required />
           I agree to the Terms of Use and Privacy principles.
         </label>
 
-        <Button type="submit" variant="accent" size="lg" className="w-full" disabled={submitting}>
+        <Button type="submit" variant="accent" size="lg" className="w-full" disabled={submitting || passwordsMismatch}>
           {submitting ? "Creating account…" : "Create Account"}
         </Button>
       </form>

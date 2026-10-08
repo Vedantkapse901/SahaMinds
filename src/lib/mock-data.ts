@@ -9,6 +9,8 @@ import {
 
 const TODAY = new Date("2026-10-08T00:00:00");
 
+export const TODAY_ISO = toLocalISODate(TODAY);
+
 const SLOT_TEMPLATE: { time: string; period: SessionPeriod }[] = [
   { time: "10:00 AM", period: "morning" },
   { time: "11:00 AM", period: "morning" },

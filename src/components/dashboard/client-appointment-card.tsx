@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Video, Mic, Calendar } from "lucide-react";
 import { Badge } from "@/components/ui/badge";

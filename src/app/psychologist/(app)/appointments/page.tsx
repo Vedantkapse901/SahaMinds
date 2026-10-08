@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { usePlatformStore } from "@/lib/store";
-import { CURRENT_PSYCHOLOGIST_ID } from "@/lib/mock-data";
+import { CURRENT_PSYCHOLOGIST_ID, TODAY_ISO } from "@/lib/mock-data";
 import { Appointment } from "@/lib/types";
 
 export default function PsychologistAppointmentsPage() {
@@ -14,8 +14,7 @@ export default function PsychologistAppointmentsPage() {
   const { appointments, updateAppointmentStatus } = usePlatformStore();
   const mine = appointments.filter((a) => a.psychologistId === CURRENT_PSYCHOLOGIST_ID);
 
-  const today = mine[0]?.date;
-  const todayList = mine.filter((a) => a.status === "upcoming" && a.date === today);
+  const todayList = mine.filter((a) => a.status === "upcoming" && a.date === TODAY_ISO);
   const upcoming = mine.filter((a) => a.status === "upcoming");
   const completed = mine.filter((a) => a.status === "completed");
   const cancelled = mine.filter((a) => a.status === "cancelled");

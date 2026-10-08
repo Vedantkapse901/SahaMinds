@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Textarea } from "@/components/ui/input";
-import { cn, formatINR, parseLocalDate } from "@/lib/utils";
+import { cn, formatINR, parseLocalDate, todayLocalISODate } from "@/lib/utils";
 import { Psychologist, ConsultationType, Appointment } from "@/lib/types";
 import { usePlatformStore } from "@/lib/store";
 import { CURRENT_CLIENT, PLATFORM_FEE_RATE } from "@/lib/mock-data";
@@ -46,7 +46,6 @@ export function BookingFlow({
   const [phone, setPhone] = useState(CURRENT_CLIENT.phone);
   const [reason, setReason] = useState("");
   const [paying, setPaying] = useState(false);
-  const [bookedId, setBookedId] = useState<string | null>(null);
 
   const selectedDay = dateIdx !== null ? psychologist.availability[dateIdx] : null;
   const platformFee = Math.round(psychologist.fee * PLATFORM_FEE_RATE);
@@ -58,7 +57,6 @@ export function BookingFlow({
     setTime(null);
     setReason("");
     setPaying(false);
-    setBookedId(null);
   }
 
   function handleClose(next: boolean) {
@@ -88,10 +86,9 @@ export function BookingFlow({
         paymentStatus: "paid",
         fee: psychologist.fee,
         platformFee,
-        createdAt: new Date().toISOString().slice(0, 10),
+        createdAt: todayLocalISODate(),
       };
       bookAppointment(appointment);
-      setBookedId(id);
       setPaying(false);
       setStep(5);
     }, 1100);

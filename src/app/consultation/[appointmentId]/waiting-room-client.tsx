@@ -18,7 +18,15 @@ export default function WaitingRoomClient() {
   const [testing, setTesting] = useState(false);
 
   useEffect(() => {
-    const t = setInterval(() => setSecondsLeft((s) => Math.max(0, s - 1)), 1000);
+    const t = setInterval(() => {
+      setSecondsLeft((s) => {
+        if (s <= 1) {
+          clearInterval(t);
+          return 0;
+        }
+        return s - 1;
+      });
+    }, 1000);
     return () => clearInterval(t);
   }, []);
 

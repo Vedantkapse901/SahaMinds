@@ -14,6 +14,7 @@ export default function AdminPsychologistsPage() {
       <p className="mt-1 text-foreground-muted">All professionals registered on the platform.</p>
 
       <div className="mt-8 overflow-hidden rounded-2xl border border-border bg-surface">
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-surface-muted text-left text-xs uppercase tracking-wider text-foreground-muted">
             <tr>
@@ -43,7 +44,7 @@ export default function AdminPsychologistsPage() {
                   )}
                 </td>
                 <td className="px-5 py-4 text-right">
-                  <Link href={`/psychologists/${p.id}`} target="_blank">
+                  <Link href={`/psychologists/${p.id}`} target="_blank" rel="noopener noreferrer">
                     <Button variant="outline" size="sm">View profile</Button>
                   </Link>
                 </td>
@@ -51,6 +52,7 @@ export default function AdminPsychologistsPage() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

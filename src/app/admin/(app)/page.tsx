@@ -2,7 +2,7 @@
 
 import { Users, Stethoscope, CalendarClock, Wallet, Percent, ShieldAlert } from "lucide-react";
 import { usePlatformStore } from "@/lib/store";
-import { PSYCHOLOGISTS } from "@/lib/mock-data";
+import { PSYCHOLOGISTS, TODAY_ISO } from "@/lib/mock-data";
 import { formatINR } from "@/lib/utils";
 
 export default function AdminOverviewPage() {
@@ -10,7 +10,7 @@ export default function AdminOverviewPage() {
   const pendingVerifications = verifications.filter((v) => v.status === "pending").length;
   const gmv = appointments.reduce((sum, a) => sum + a.fee + a.platformFee, 0);
   const revenue = appointments.reduce((sum, a) => sum + a.platformFee, 0);
-  const todaysConsultations = appointments.filter((a) => a.date === appointments[0]?.date).length;
+  const todaysConsultations = appointments.filter((a) => a.date === TODAY_ISO).length;
 
   const metrics = [
     { icon: Users, label: "Registered Users", value: "1,284" },

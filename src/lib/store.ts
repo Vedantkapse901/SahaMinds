@@ -50,7 +50,16 @@ export const usePlatformStore = create<PlatformState>()(
       updateAppointmentStatus: (id, status) =>
         set((state) => ({
           appointments: state.appointments.map((a) =>
-            a.id === id ? { ...a, status } : a
+            a.id === id
+              ? {
+                  ...a,
+                  status,
+                  paymentStatus:
+                    status === "cancelled" && a.paymentStatus === "paid"
+                      ? "refunded"
+                      : a.paymentStatus,
+                }
+              : a
           ),
         })),
 

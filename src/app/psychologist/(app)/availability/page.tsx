@@ -83,7 +83,7 @@ export default function AvailabilityPage() {
         </h2>
         <p className="mt-1 text-sm text-foreground-muted">
           Blocking a slot here removes it from your public booking page immediately — try it, then check the same slot on{" "}
-          <a href={`/psychologists/${psychologist.id}`} target="_blank" className="text-accent hover:underline">
+          <a href={`/psychologists/${psychologist.id}`} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
             your public profile
           </a>.
         </p>

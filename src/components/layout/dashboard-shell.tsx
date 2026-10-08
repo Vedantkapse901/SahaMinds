@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LucideIcon, LogOut, Menu, X } from "lucide-react";
+import { LucideIcon, LogOut, Menu } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -87,7 +87,7 @@ export function DashboardShell({
         </div>
       )}
 
-      <div className="flex min-h-screen flex-1 flex-col">
+      <div className="flex min-h-screen min-w-0 flex-1 flex-col">
         <div className="flex items-center justify-between border-b border-border bg-surface px-5 py-4 lg:hidden">
           <span className="font-display text-lg text-charcoal">
             SAHA<span className="text-accent">MINDS</span>
@@ -96,7 +96,7 @@ export function DashboardShell({
             <Menu className="h-5 w-5" />
           </button>
         </div>
-        <main className="flex-1 px-5 py-8 sm:px-8 lg:px-10">{children}</main>
+        <main className="min-w-0 flex-1 px-5 py-8 sm:px-8 lg:px-10">{children}</main>
       </div>
     </div>
   );

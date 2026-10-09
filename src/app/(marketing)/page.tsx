@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   ShieldCheck,
   MapPin,
@@ -19,8 +20,8 @@ export default function HomePage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-charcoal text-white">
         <div className="noise-overlay" />
-        <div className="relative mx-auto grid max-w-7xl gap-12 px-5 py-24 sm:px-8 sm:py-32 lg:grid-cols-2 lg:items-center">
-          <div>
+        <div className="relative mx-auto grid max-w-7xl gap-12 px-5 py-24 sm:px-8 sm:py-32 lg:grid-cols-[1fr_1.3fr] lg:items-stretch">
+          <div className="min-w-0">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-medium text-white/70">
               Private. Accessible. Professional.
             </span>
@@ -50,8 +51,23 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="relative mx-auto aspect-square w-full max-w-md">
-            <HeroGraphic />
+          <div className="relative min-w-0 w-full">
+            <div className="absolute -inset-10 -z-10 rounded-full bg-accent/20 blur-3xl" />
+            <div className="relative aspect-[4/3] min-h-[320px] overflow-hidden rounded-3xl border border-white/10 shadow-2xl sm:aspect-[16/11] lg:aspect-auto lg:h-full lg:min-h-[480px]">
+              <Image
+                src="/images/hero.png"
+                alt="A psychologist's view over her shoulder of a private video consultation with a client"
+                fill
+                priority
+                sizes="(min-width: 1024px) 55vw, 90vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/40 via-transparent to-transparent" />
+            </div>
+            <div className="absolute -bottom-5 left-5 flex items-center gap-2 rounded-full border border-white/10 bg-charcoal/90 px-4 py-2 text-xs font-medium text-white/80 shadow-lg backdrop-blur">
+              <span className="h-2 w-2 rounded-full bg-success" />
+              Private · Encrypted session
+            </div>
           </div>
         </div>
       </section>
@@ -221,66 +237,5 @@ export default function HomePage() {
         </Reveal>
       </section>
     </>
-  );
-}
-
-function HeroGraphic() {
-  return (
-    <svg viewBox="0 0 400 400" className="h-full w-full" role="img" aria-label="An orbiting network representing private connection between a client and a psychologist">
-      <defs>
-        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#b8673a" stopOpacity="0.35" />
-          <stop offset="100%" stopColor="#b8673a" stopOpacity="0" />
-        </radialGradient>
-        <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
-          <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-
-      <circle cx="200" cy="200" r="190" fill="url(#glow)" />
-
-      {/* Orbit guide rings */}
-      <circle cx="200" cy="200" r="150" fill="none" stroke="#ffffff" strokeOpacity="0.08" strokeWidth="1" />
-      <circle cx="200" cy="200" r="108" fill="none" stroke="#ffffff" strokeOpacity="0.1" strokeWidth="1" />
-      <circle cx="200" cy="200" r="72" fill="none" stroke="#ffffff" strokeOpacity="0.14" strokeWidth="1" strokeDasharray="1 7" />
-
-      {/* Distant, stationary node — the wider community of care, anchored and calm */}
-      <circle cx="108" cy="300" r="9" fill="#ffffff" fillOpacity="0.12" />
-      <line x1="108" y1="300" x2="200" y2="200" stroke="#ffffff" strokeOpacity="0.08" strokeWidth="1" strokeDasharray="2 6" />
-
-      {/* Spoke: the client, orbiting slowly */}
-      <g>
-        <animateTransform attributeName="transform" type="rotate" from="0 200 200" to="360 200 200" dur="46s" repeatCount="indefinite" />
-        <line x1="200" y1="200" x2="200" y2="92" stroke="#ffffff" strokeOpacity="0.22" strokeWidth="1.5" />
-        <circle cx="200" cy="92" r="21" fill="#f1e2d5" fillOpacity="0.92" />
-        <circle cx="200" cy="92" r="30" fill="none" stroke="#f1e2d5" strokeOpacity="0.25" strokeWidth="1">
-          <animate attributeName="r" values="22;32;22" dur="5s" repeatCount="indefinite" />
-          <animate attributeName="stroke-opacity" values="0.3;0;0.3" dur="5s" repeatCount="indefinite" />
-        </circle>
-        <circle r="3" fill="#ffffff" fillOpacity="0.9">
-          <animateMotion path="M200,200 L200,92" dur="2.4s" repeatCount="indefinite" />
-          <animate attributeName="opacity" values="0;1;1;0" dur="2.4s" repeatCount="indefinite" />
-        </circle>
-      </g>
-
-      {/* Spoke: the psychologist, orbiting the opposite way at a different pace */}
-      <g>
-        <animateTransform attributeName="transform" type="rotate" from="360 200 200" to="0 200 200" dur="34s" repeatCount="indefinite" />
-        <line x1="200" y1="200" x2="200" y2="129" stroke="#ffffff" strokeOpacity="0.18" strokeWidth="1.5" />
-        <circle cx="200" cy="129" r="15" fill="#b8673a" fillOpacity="0.95" />
-        <circle cx="200" cy="129" r="22" fill="none" stroke="#b8673a" strokeOpacity="0.3" strokeWidth="1">
-          <animate attributeName="r" values="16;24;16" dur="4s" repeatCount="indefinite" />
-          <animate attributeName="stroke-opacity" values="0.35;0;0.35" dur="4s" repeatCount="indefinite" />
-        </circle>
-      </g>
-
-      {/* Centre — SahaMinds: a calm, breathing core */}
-      <circle cx="200" cy="200" r="48" fill="url(#coreGlow)" opacity="0.5">
-        <animate attributeName="r" values="44;52;44" dur="6s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0.35;0.55;0.35" dur="6s" repeatCount="indefinite" />
-      </circle>
-      <circle cx="200" cy="200" r="23" fill="#ffffff" fillOpacity="0.95" />
-    </svg>
   );
 }
